@@ -79,4 +79,17 @@ For visit : open the datas folder where it was saved and open them using PlainTe
 
 For paraview : open the datas forlder as csv view, use filter "datas to point" and configure x,y to be the coordinates.
 
-Adapt this to datasCyl where (xc,yc,zc) are the coordinates.
+For julia : in a julia repl, you will have to install DataFrames, CSV, TidierData and Plots using
+```julia
+] add Plots,DataFrames,TidierData,CSV
+```
+Then run the follwing code,
+```julia
+using Plots,DataFrames,TidierData,CSV
+dir = "./datas" # or the complete path
+files = readdir(dir)
+df = reduce(vcat,map(f -> CSV.read(f,DataFrame),files))
+heatmap(df.x,df.u,df.u1)
+```
+
+Adapt this to datasCyl where (xc,yc,zc) are the coordinates (index 0,1,2).
