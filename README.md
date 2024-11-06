@@ -71,7 +71,7 @@ with $u\in \mathbb{R}^n$, $f\in \mathbb{R}^{n\times d}$, $s\in \mathbb{R}^n$. Al
 
 Finally, you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
 
-## how to view my datas ?
+## How to view my datas ?
 
 You can view your datas using Visit and Paraview or directly in julia.
 
