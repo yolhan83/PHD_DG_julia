@@ -94,3 +94,21 @@ heatmap(df.x,df.u,df.u1)
 ```
 
 Adapt this to datasCyl where (xc,yc,zc) are the coordinates (index 0,1,2).
+
+## Remarks
+
+1. The boundary conditions takes $u$ as an argument, this $u$ is the one coming from the trace of the solution at the face. This allows for simple neumann conditions.
+2. Boundary conditions are all weakly impose, meaning, if they're not "physical" they won't be forced. User should then look for "hyperbolicly right" boundary conditions. If you think they should be right for a specific case, I will be glad to talk about it !
+3. Only the elements loop is made in parallel for now.
+
+## Future plan
+
+This should begin after the phd is fully over, also, tests should be added, and, a seperate package for the features should be made so that this one would just be an ease to run for julia non initiated.
+
+1. Support any Meshes.jl mesh or T8Code.jl mesh.
+2. Find a nice way to parallel the face loop (high priority for a big speed-up).
+3. After (2) is solved, implement what's needed for MPI.jl to be used, a first step would be to allow for some kind of distributive programing
+4. Change to use DifferentialEquations.
+5. After (5), implement a parabolic term with Additive methods.
+6. Support 1D directly in this repo.
+7. Make the code differentiable.
