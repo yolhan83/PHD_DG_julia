@@ -112,3 +112,7 @@ This should begin after the phd is fully over, also, tests should be added, and,
 5. After (5), implement a parabolic term with Additive methods.
 6. Support 1D directly in this repo.
 7. Make the code differentiable.
+
+## Notes
+
+All those functionlity with much more (any P4Est, T8Code mesh, AMR callbacks at any point (RK substep, step, save), adaptive mesh, cpu, mpi, gpu .... ) are implemented within Trixi.jl, use that is you want DG at full power.
