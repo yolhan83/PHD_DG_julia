@@ -64,7 +64,7 @@ this package will then solve the following problem,
     u((bx,y),t) &=& u_{right}(t)\\
     u((x,ay),t) &=& u_{bot}(t)\\
     u((x,by),t) &=& u_{top}(t)
-\end{cases}
+\end{cases} \quad \forall ax \le x \le bx,\, ay \le y \le by, \, 0 \le t \le T
 ```
 
 then you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
