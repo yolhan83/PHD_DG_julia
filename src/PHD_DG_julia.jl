@@ -14,7 +14,7 @@ include("files/DG.jl") # for DG semi-solver
 include("TCs/BF.jl") # for advection model
 
 function main()
-    include("NumParam.jl")
+    include("./src/NumParam.jl")
     param = get_param(N...,deg,ax,bx,ay,by) 
     prob = get_prob(param,ninc,deg,tspan) 
     method = RKMethod(time_order)()
