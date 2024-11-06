@@ -2,7 +2,7 @@
 
 Welcome to my repository implementing the 2D Discontinous Galerkin Method (DGm) for advection system.
 
-## How to run
+## How to run ?
 
 To run the code simply follow those steps :
 
@@ -31,7 +31,7 @@ run
 julia -t auto --project rmfiles.jl
 ```
 
-## How to make a test case
+## How to make a test case ?
 
 A test case need to implement the follwing functions
 
@@ -70,3 +70,13 @@ with $u\in \mathbb{R}^n$, $f\in \mathbb{R}^{d\times n}$, $s\in \mathbb{R}^n$. Al
 
 
 Finally, you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
+
+## how to view my datas ?
+
+You can view your datas using Visit and Paraview or directly in julia.
+
+For visit : open the datas folder where it was saved and open them using PlainText, check the box "first row as variable names" and set x and y coordinates as 0 and 1 index respectivly. 
+
+For paraview : open the datas forlder as csv view, use filter "datas to point" and configure x,y to be the coordinates.
+
+Adapt this to datasCyl where (xc,yc,zc) are the coordinates.
