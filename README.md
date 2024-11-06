@@ -9,7 +9,7 @@ To run the code simply follow those steps :
 1. Install julia
 2. git clone the repo using 
 ```bash 
-git clone https://github.com/yolhan83/PHD_DG_julia/tree/main 
+git clone https://github.com/yolhan83/PHD_DG_julia/
 ```
 3. setup the project (only ones) 
 ```bash
