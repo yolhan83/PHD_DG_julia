@@ -41,7 +41,7 @@ function main()
             rm(joinpath(dir,f))
         end
     
-        @time solve(prob, method;nsave=30,callback = cylinder,verbose = true); 
+        @time solve(prob, method;nsave=30,callback = callback,verbose = true); 
     end    
 end
 end # module PHD_DG_julia

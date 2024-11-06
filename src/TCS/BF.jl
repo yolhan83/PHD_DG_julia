@@ -222,7 +222,7 @@ end
 
 #  here we will add a little function to get the cylinder back
 
-function cylinder(df,cnt)
+function callback(df,cnt)
     # df is a dataframe (t,x,y,qθ/A,qs/A)
     dfcyl = @chain df begin
         @mutate(theta = x)
