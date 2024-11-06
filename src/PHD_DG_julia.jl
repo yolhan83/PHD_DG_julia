@@ -21,7 +21,7 @@ function main()
     param = get_param(N...,deg,ax,bx,ay,by) 
     
     ninc = 3
-    tspan = (0.0,0.01)
+    tspan = (0.0,0.05)
     prob = get_prob(param,ninc,deg,tspan) 
     
     time_order = deg+1
