@@ -79,14 +79,14 @@ For visit : open the datas folder where it was saved and open them using PlainTe
 
 For paraview : open the datas forlder as csv view, use filter "datas to point" and configure x,y to be the coordinates.
 
-For julia : in a julia repl, you will have to install DataFrames, CSV, TidierData and Plots using
+For julia : in a julia repl, you will have to install DataFrames, CSV and Plots using
 ```julia
 using Pkg
 Pkg.add(["Plots","DataFrames","CSV"])
 ```
 Then run the follwing code,
 ```julia
-using Plots,DataFrames,TidierData,CSV
+using Plots,DataFrames,CSV
 dir = "./datas" # or the complete path
 files = readdir(dir)
 df = reduce(vcat,map(f -> CSV.read(f,DataFrame),files))
