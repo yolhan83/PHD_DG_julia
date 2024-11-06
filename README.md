@@ -55,4 +55,16 @@ utop(u::AbstractVector,p::Point,t::Number,i::Int) ::Number
 callback(df::DataFrame,cnt::Int) ::Nothing
 ```
 
+this package will then solve the following problem,
+$$
+\begin{cases}
+    \partial_t u + div f(u,p,t) &=& s(u,\nabla u,p,t)\\
+    u(p,t=0) &=& u_0(p)\\
+    u((ax,y),t) &=& u_{left}(t)\\
+    u((bx,y),t) &=& u_{right}(t)\\
+    u((x,ay),t) &=& u_{bot}(t)\\
+    u((x,by),t) &=& u_{top}(t)
+\end{cases}
+$$
+
 then you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
