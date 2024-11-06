@@ -66,7 +66,7 @@ this package will then solve the following problem,
     u((x,by),t) &=& u_{top}(t)
 \end{cases} \quad  ax \le x \le bx,\, ay \le y \le by, \, 0 \le t \le T
 ```
-with $u\in \mathbb{R}^n$, $f\in \mathbb{R}^{d\times n}$, $s\in \mathbb{R}^n$. Also, $\lambda \in \mathbb{R}^{d\times n}$ is the eigen values of $\nabla_u f$. Note that $n$ is the number of unknown and the number of equations too here and $d$ is the dimension $n=2$ evereywhere here.
+with $u\in \mathbb{R}^n$, $f\in \mathbb{R}^{n\times d}$, $s\in \mathbb{R}^n$. Also, $\lambda \in \mathbb{R}^{n\times d}$ is the eigen values of $\nabla_u f$. Note that $n$ is the number of unknown and the number of equations too here and $d$ is the dimension $n=2$ evereywhere here.
 
 
 Finally, you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
@@ -79,4 +79,18 @@ For visit : open the datas folder where it was saved and open them using PlainTe
 
 For paraview : open the datas forlder as csv view, use filter "datas to point" and configure x,y to be the coordinates.
 
-Adapt this to datasCyl where (xc,yc,zc) are the coordinates.
+For julia : in a julia repl, you will have to install DataFrames, CSV and Plots using
+```julia
+using Pkg
+Pkg.add(["Plots","DataFrames","CSV"])
+```
+Then run the follwing code,
+```julia
+using Plots,DataFrames,CSV
+dir = "./datas" # or the complete path
+files = readdir(dir)
+df = reduce(vcat,map(f -> CSV.read(f,DataFrame),files))
+heatmap(df.x,df.u,df.u1)
+```
+
+Adapt this to datasCyl where (xc,yc,zc) are the coordinates (index 0,1,2).
