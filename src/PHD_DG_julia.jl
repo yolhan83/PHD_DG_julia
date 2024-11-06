@@ -14,17 +14,9 @@ include("files/DG.jl") # for DG semi-solver
 include("TCs/BF.jl") # for advection model
 
 function main()
-    N = (16,32)
-    deg=2
-    ax,bx = -pi,pi
-    ay,by = 0.0,20.0
+    include("NumParam.jl")
     param = get_param(N...,deg,ax,bx,ay,by) 
-    
-    ninc = 3
-    tspan = (0.0,0.05)
     prob = get_prob(param,ninc,deg,tspan) 
-    
-    time_order = deg+1
     method = RKMethod(time_order)()
     dtmax,c = adapt_dt(prob.u0,param,0.0) 
     
