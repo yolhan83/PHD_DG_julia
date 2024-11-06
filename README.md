@@ -69,7 +69,7 @@ this package will then solve the following problem,
 with $u\in \mathbb{R}^n$, $f\in \mathbb{R}^{n\times d}$, $s\in \mathbb{R}^n$. Also, $\lambda \in \mathbb{R}^{n\times d}$ is the eigen values of $\nabla_u f$. Note that $n$ is the number of unknown and the number of equations too here and $d$ is the dimension $n=2$ evereywhere here.
 
 
-Finally, you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
+Finally, you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in the NumParam file in src. Then, simply run as before.
 
 ## How to view my datas ?
 
