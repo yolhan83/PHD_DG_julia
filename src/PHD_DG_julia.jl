@@ -8,7 +8,7 @@ include("src/files/Helper.jl")
 include("src/files/RKsolver.jl") # for RK solver
 include("src/files/DG.jl") # for DG semi-solver
 
-include("./TCs/BF.jl") # for advection model
+include("src/TCs/BF.jl") # for advection model
 
 
 N = (32,64)
