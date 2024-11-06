@@ -51,5 +51,4 @@ utop(u::AbstractVector,p::Point,t::Number,i::Int) ::Number
 callback(df::DataFrame,cnt::Int) ::Nothing
 ```
 
-then you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14
-simply run as before
+then you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
