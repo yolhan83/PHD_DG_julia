@@ -13,3 +13,27 @@ To run the code simply follow those steps :
 
 To clear the datas, 
 run ```julia -t auto --project rmfiles.jl```
+
+## How to make a test case
+
+A test case need to implement the follwing functions
+
+```
+f(u::AbstractVector,p::Point,t::Number,i::Int,j::Int) ::Number
+
+s(u::AbstractVector,dux::AbstractVector,duy::AbstractVector,p::Point,t::Number,i::Int) ::Number
+
+λ(u::AbstractVector,p::Point,t::Number,i::Int,j::Int) ::Number
+
+u0(p::Point,i::Int) ::Number
+
+uleft(u::AbstractVector,p::Point,t::Number,i::Int) ::Number
+
+uright(u::AbstractVector,p::Point,t::Number,i::Int) ::Number
+
+ubot(u::AbstractVector,p::Point,t::Number,i::Int) ::Number
+
+utop(u::AbstractVector,p::Point,t::Number,i::Int) ::Number
+
+callback(df::DataFrame,cnt::Int) ::Nothing
+```
