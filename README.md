@@ -55,4 +55,18 @@ utop(u::AbstractVector,p::Point,t::Number,i::Int) ::Number
 callback(df::DataFrame,cnt::Int) ::Nothing
 ```
 
-then you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
+this package will then solve the following problem,
+```math
+\begin{cases}
+    \partial_t u + div f(u,p,t) &=& s(u,\nabla u,p,t)\\
+    u(p,t=0) &=& u_0(p)\\
+    u((ax,y),t) &=& u_{left}(t)\\
+    u((bx,y),t) &=& u_{right}(t)\\
+    u((x,ay),t) &=& u_{bot}(t)\\
+    u((x,by),t) &=& u_{top}(t)
+\end{cases} \quad  ax \le x \le bx,\, ay \le y \le by, \, 0 \le t \le T
+```
+with $u\in \mathbb{R}^n$, $f\in \mathbb{R}^{d\times n}$, $s\in \mathbb{R}^n$. Also, $\lambda \in \mathbb{R}^{d\times n}$ is the eigen values of $\nabla_u f$. Note that $n$ is the number of unknown and the number of equations too here and $d$ is the dimension $n=2$ evereywhere here.
+
+
+Finally, you go to the "PHD_DG_julia.jl" file in "src" and change the import line 14 together with the parameter for the numerical simulation in main. Then, simply run as before.
