@@ -3,7 +3,7 @@ module PHD_DG_julia
 try
     using Tullio,QuadGK,DataFrames,ForwardDiff,CSV,TidierData,Plots,ThreadsX 
 catch
-    throw(ErrorException("run 'julia -t auto --project setup.jl first'"))
+    throw(ErrorException("run 'julia -t auto --project setup.jl' first"))
 end
 include("files/Bases.jl") # for basis functions
 include("files/mesh.jl") # for mesh (really bad may use a librairy one day)
