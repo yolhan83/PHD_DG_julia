@@ -82,7 +82,7 @@ For paraview : open the datas forlder as csv view, use filter "datas to point" a
 For julia : in a julia repl, you will have to install DataFrames, CSV, TidierData and Plots using
 ```julia
 using Pkg
-Pkg.add(["Plots","DataFrames","TidierData","CSV"])
+Pkg.add(["Plots","DataFrames","CSV"])
 ```
 Then run the follwing code,
 ```julia
