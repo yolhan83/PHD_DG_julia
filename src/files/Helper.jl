@@ -7,6 +7,7 @@ function make_df(U,param,t)
     uncache = @view(param[3][:,1])
     dunxcache = @view(param[4][:,1])
     dunycache = @view(param[5][:,1])
+    ninc = size(U,3)
     x = Float64[]
     y = Float64[]
     u = [ Float64[] for j in 1:ninc]
