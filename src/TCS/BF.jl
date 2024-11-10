@@ -225,22 +225,21 @@ end
 function callback(df,cnt)
     # df is a dataframe (t,x,y,qθ/A,qs/A)
     dfcyl = @chain df begin
-        @mutate(theta = x)
-        @mutate(s = y)
+        @mutate(theta = x,s = y)
         @mutate(A = u1+!!A0(!!Point(theta,s)))
-        @mutate(R = sqrt(2*A))
-        @mutate(P = P(A,!!Point(theta,s)))
-        @mutate(ur = -dux2/(R*A)+2*u2/A^2*(dux1+dA0θ(!!Point(theta,s)))-duy3+u3/A*(duy1+dA0s(!!Point(theta,s))))
-        @mutate(utheta = 2*u2/A*1/R) # q_theta = 3/4 * R A utheta
-        @mutate(us = u3/A)
+        @mutate(R = sqrt(2*A),P = P(A,!!Point(theta,s)))
+        @mutate(ur = -dux2/(R*A)+2*u2/A^2*(dux1+dA0θ(!!Point(theta,s)))-duy3+u3/A*(duy1+dA0s(!!Point(theta,s))),
+        utheta = 2*u2/A*1/R,
+        us = u3/A
+        )
         # now we should define the points
-        @mutate(xc = !!curve(s,1) + R*!!er(theta,s,1))
-        @mutate(yc = !!curve(s,2) + R*!!er(theta,s,2))
-        @mutate(zc = !!curve(s,3) + R*!!er(theta,s,3))
+        @mutate(xc = !!curve(s,1) + R*!!er(theta,s,1),
+        yc = !!curve(s,2) + R*!!er(theta,s,2),
+        zc = !!curve(s,3) + R*!!er(theta,s,3))
         # we might also need the velocity vector
-        @mutate(vx = 0*ur*!!er(theta,s,1) + utheta*!!eθ(theta,s,1) + us * !!tang(s,1))
-        @mutate(vy = 0*ur*!!er(theta,s,2) + utheta*!!eθ(theta,s,2) + us * !!tang(s,2))
-        @mutate(vz = 0*ur*!!er(theta,s,3) + utheta*!!eθ(theta,s,3) + us * !!tang(s,3))
+        @mutate(vx = 0*ur*!!er(theta,s,1) + utheta*!!eθ(theta,s,1) + us * !!tang(s,1),
+        vy = 0*ur*!!er(theta,s,2) + utheta*!!eθ(theta,s,2) + us * !!tang(s,2),
+        vz = 0*ur*!!er(theta,s,3) + utheta*!!eθ(theta,s,3) + us * !!tang(s,3))
         #now to simplify, the file should begin with (xc,yc,zc)
         @select(xc,yc,zc,vx,vy,vz,ur,utheta,us,Area=A,Radius=R,Pressure=P,theta,sax=s,time=t)
     end
