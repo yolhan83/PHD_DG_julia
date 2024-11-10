@@ -28,8 +28,8 @@ end
 get_param(Nx,Ny,deg,ax,bx,ay,by)
 make the mesh and some caching for our DG method, store in parameters of the later ODEprob
 """
-function get_param(Nx,Ny,deg,ax,bx,ay,by)
-    ele,fcs = make_mesh((Nx,Ny),deg,(ax,bx,ay,by));
+function get_param(Nx,Ny,deg,ax,bx,ay,by;periodic=(false,false))
+    ele,fcs = make_mesh((Nx,Ny),deg,(ax,bx,ay,by);periodic);
     nth = Threads.nthreads()
     return (ele,fcs,zeros(3,nth),zeros(3,nth),zeros(3,nth),zeros((deg+1)^2));
 end
