@@ -109,8 +109,6 @@ This should begin after the phd is fully over, also, tests should be added, and,
 2. After (1) is solved, implement what's needed for MPI.jl to be used, a first step would be to allow for some kind of distributive programing
 3. Change to use DifferentialEquations.
 4. After (3), implement a parabolic term with Additive methods.
-5. Support 1D directly in this repo.
-6. Make the code differentiable.
 
 ## Notes
 

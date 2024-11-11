@@ -4,29 +4,35 @@ Make a dataframe from the solution at a certain time
 """
 function make_df(U,param,t)
     ele = param[1]
-    uncache = @view(param[3][:,1])
-    dunxcache = @view(param[4][:,1])
-    dunycache = @view(param[5][:,1])
+    uncache = param[3] #@view(param[3][:,1])
+    dunxcache = param[4] #@view(param[4][:,1])
+    dunycache = param[5] #@view(param[5][:,1])
     ninc = size(U,3)
-    x = Float64[]
-    y = Float64[]
-    u = [ Float64[] for j in 1:ninc]
-    dux = [ Float64[] for j in 1:ninc]
-    duy = [ Float64[] for j in 1:ninc]
-    for el in ele
-        id = el.id
+    numberofpoints = length(ele)*length(ele[1].gp)
+    x = Vector{Float64}(undef,numberofpoints)
+    y = Vector{Float64}(undef,numberofpoints)
+    u = [ Vector{Float64}(undef,numberofpoints) for j in 1:ninc]
+    dux = [ Vector{Float64}(undef,numberofpoints) for j in 1:ninc]
+    duy = [ Vector{Float64}(undef,numberofpoints) for j in 1:ninc]
+    Threads.@threads for n in eachindex(ele)
+        el = ele[n]
+        idx = Threads.threadid()
+        uncacheid = @view(uncache[:,idx])
+        dunxcacheid = @view(dunxcache[:,idx])
+        dunycacheid = @view(dunycache[:,idx])
         for k in eachindex(el.gp,el.gw)
             p = el.gp[k]
             preal = to_real(p,el)
-            push!(x,preal.x)
-            push!(y,preal.y)
-            eval_u!(uncache,U,p,el)
-            eval_dux!(dunxcache,U,p,el)
-            eval_duy!(dunycache,U,p,el)
+            cid = (n-1)*length(el.gp)+k
+            x[cid] = preal.x
+            y[cid] = preal.y
+            eval_u!(uncacheid,U,p,el)
+            eval_dux!(dunxcacheid,U,p,el)
+            eval_duy!(dunycacheid,U,p,el)
             for j in 1:ninc
-                push!(u[j],uncache[j])
-                push!(dux[j],dunxcache[j])
-                push!(duy[j],dunycache[j])
+                u[j][cid] = uncacheid[j]
+                dux[j][cid] = dunxcacheid[j]
+                duy[j][cid] = dunycacheid[j]
             end
         end
     end
@@ -47,9 +53,9 @@ function adapt_dt(U,param,t;cfl = 0.9)
         id = el.id
         tid = Threads.threadid()
         p = el.center
-        for j in axes(U,3)
+        @inbounds  @simd for j in axes(U,3)
             eval_u!(@view(un[:,tid]),U,Point(0.0,0.0),el)
-            for d in 1:2
+            @inbounds  @simd for d in 1:2
                 m[tid] = max(m[tid],abs( λ(@view(un[:,tid]),p,t,j,d) ))
             end
         end
