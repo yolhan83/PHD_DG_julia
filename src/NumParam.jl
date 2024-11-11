@@ -7,3 +7,5 @@ ninc = 3
 tspan = (0.0,0.05)
 
 time_order = deg+1
+
+periodic = (true,false)

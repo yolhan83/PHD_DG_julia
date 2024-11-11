@@ -8,6 +8,10 @@ f(u,t,i,j) where i is the line of f and j is the collumn of f
 
 """
 
+bat(p) = exp(-50*(p.x-1.0)^2-50*(p.y-1.0)^2)
+
+batpx(p) = ForwardDiff.derivative(x->bat(Point(x,p.y)),p.x)
+batpy(p) = ForwardDiff.derivative(y->bat(Point(p.x,y)),p.y)
 function f(u,p,t,i,j)
     h,qx,qy = u
     g = 9.81
@@ -33,12 +37,14 @@ function f(u,p,t,i,j)
 end
 
 function s(u,dux,duy,p,t,i)
+    h,qx,qy = u
+    g=9.81
     if i==1
         return 0.0
     elseif i==2
-        return 0.0
+        return -g*h*batpx(p)
     else
-        return 0.0
+        return -g*h*batpy(p)
     end
 end
 
@@ -71,7 +77,7 @@ end
 
 function u0(p,i)
     if i==1
-        return 1.0
+        return 2.0-bat(p)
     elseif i==2
         return 0.0
     else
@@ -103,7 +109,7 @@ function ubot(u,p,t,i)
     elseif i==2
         return u[i]#sinpi(4t)^2*exp(-50*(p.y-1.0)^2) # enter a wave function in the x direction
     else
-        return   sinpi(4t)^2*exp(-50*(p.x-1.0)^2)#
+        return 10*sinpi(4t)^2*exp(-50*(p.x-1.0)^2)#
     end
 end
 
@@ -112,5 +118,12 @@ function utop(u,p,t,i)
 end
 
 function callback(df,cnt)
+    ndf = @chain df begin
+        @mutate(Height = u1+bat(!!Point(x,y)))
+        @mutate(height = u1,qx = u2,qy = u3, bati = !!bat(!!Point(x,y)))
+        @mutate(ux = qx/height,uy = qy/height)
+        @select(x,y,Height,height,ux,uy,qx,qy,bati,time = t)
+    end
+    CSV.write("./datasCyl/data$cnt.csv",ndf)
     return false
 end
