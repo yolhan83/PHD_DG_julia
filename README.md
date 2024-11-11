@@ -99,7 +99,6 @@ Adapt this to datasCyl where (xc,yc,zc) are the coordinates (index 0,1,2).
 
 1. The boundary conditions takes $u$ as an argument, this $u$ is the one coming from the trace of the solution at the face. This allows for simple neumann conditions.
 2. Boundary conditions are all weakly impose, meaning, if they're not "physical" they won't be forced. User should then look for "hyperbolicly right" boundary conditions. If you think they should be right for a specific case, I will be glad to talk about it !
-3. Only the elements loop is made in parallel for now.
 
 ## Future plan
 
