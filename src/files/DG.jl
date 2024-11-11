@@ -28,10 +28,10 @@ end
 get_param(Nx,Ny,deg,ax,bx,ay,by)
 make the mesh and some caching for our DG method, store in parameters of the later ODEprob
 """
-function get_param(Nx,Ny,deg,ax,bx,ay,by;periodic=(false,false))
+function get_param(Nx,Ny,deg,ninc,ax,bx,ay,by;periodic=(false,false))
     ele,fcs = make_mesh((Nx,Ny),deg,(ax,bx,ay,by);periodic);
     nth = Threads.nthreads()
-    return (ele,fcs,zeros(3,nth),zeros(3,nth),zeros(3,nth),zeros((deg+1)^2));
+    return (ele,fcs,zeros(ninc,nth),zeros(ninc,nth),zeros(ninc,nth),zeros((deg+1)^2),zeros(length(fcs),(deg+1)^2,ninc,2));
 end
 
 """
@@ -144,15 +144,16 @@ function surface_integral!(dU,U,param,t,c)
     unleft = param[3]#@view(param[3][:,1])
     unright = param[4]#@view(param[4][:,1])
     uncache = param[5]#@view(param[5][:,1])
-    for fc in fcs
+    fccache = param[7]
+    fccache .= 0.0
+    Threads.@threads for fci in eachindex(fcs)
+        fc = fcs[fci]
         tid = Threads.threadid()
         unleftid= @view(unleft[:,tid])
         unrightid= @view(unright[:,tid])
         uncacheid= @view(uncache[:,tid])
         el_left = fc.el_left
-        idleft = el_left.id
         el_right = fc.el_right
-        idright = el_right.id
         normal = fc.normal
         # let's work on a specific gauss point
         for k in eachindex(fc.gp)
@@ -194,14 +195,24 @@ function surface_integral!(dU,U,param,t,c)
                 error("unknown tag")
             end
             # ok we have everything to calculate the numerical flux !
-            for j in axes(dU,3)
-                flux = Rusanov_flux(unleft,unright,normal,preal,t,j,c)
-                for i in axes(dU,1)
+            @simd for j in axes(dU,3)
+                flux = Rusanov_flux(unleftid,unrightid,normal,preal,t,j,c)
+                @simd for i in axes(dU,1)
                     if fc.tag == :inner
-                        @inbounds dU[i,idleft,j] -= fc.h/2*fc.gw[k]*flux*phi(pleft,i,fc.el_left)
+                        @inbounds fccache[fci,i,j,1] -= fc.h/2*fc.gw[k]*flux*phi(pleft,i,fc.el_left) # dU[i,idleft,j]
                     end
-                    @inbounds dU[i,idright,j] += fc.h/2*fc.gw[k]*flux*phi(pright,i,fc.el_right)
+                    @inbounds fccache[fci,i,j,2] += fc.h/2*fc.gw[k]*flux*phi(pright,i,fc.el_right) #dU[i,idright,j]
                 end
+            end
+        end
+    end
+    for (fci,fc) in enumerate(fcs)
+        idleft = fc.el_left.id
+        idright = fc.el_right.id
+        @inbounds @simd for j in axes(dU,3)
+            @inbounds @simd for i in axes(dU,1)
+                dU[i,idleft,j] += fccache[fci,i,j,1]
+                dU[i,idright,j] += fccache[fci,i,j,2]
             end
         end
     end
