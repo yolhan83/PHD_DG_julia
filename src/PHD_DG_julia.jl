@@ -15,7 +15,7 @@ include("TCs/BF.jl") # for advection model
 
 function main()
     include("./src/NumParam.jl")
-    param = get_param(N...,deg,ninc,ax,bx,ay,by;periodic = (true,false)) 
+    param = get_param(N...,deg,ninc,ax,bx,ay,by;periodic = periodic) 
     prob = get_prob(param,ninc,deg,tspan) 
     method = RKMethod(time_order)()
     dtmax,c = adapt_dt(prob.u0,param,0.0) 

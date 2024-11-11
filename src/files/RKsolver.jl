@@ -187,6 +187,11 @@ function solve(ODEprob, method;nsave=100,callback = nothing,verbose = false)
     @info "estimated time : $(floor(Int,estimated_time)) minutes and $(floor(Int,(estimated_time-floor(Int,estimated_time))*60)) seconds"
     # main loop
     cnt = 1
+    df = make_df(y,param,t)
+    CSV.write("./datas/data$cnt.csv",df)
+    if !isnothing(callback)
+        callback(df,cnt)
+    end
     while t <= tspan[2]
         # try
             step!(ode!,y,cache,t,dt,param,method,c)
