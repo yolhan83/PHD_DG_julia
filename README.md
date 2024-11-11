@@ -106,11 +106,9 @@ Adapt this to datasCyl where (xc,yc,zc) are the coordinates (index 0,1,2).
 This should begin after the phd is fully over, also, tests should be added, and, a seperate package for the features should be made so that this one would just be an ease to run for julia non initiated.
 
 1. Support any Meshes.jl mesh or T8Code.jl mesh.
-2. After (2) is solved, implement what's needed for MPI.jl to be used, a first step would be to allow for some kind of distributive programing
+2. After (1) is solved, implement what's needed for MPI.jl to be used, a first step would be to allow for some kind of distributive programing
 3. Change to use DifferentialEquations.
-4. After (5), implement a parabolic term with Additive methods.
-5. Support 1D directly in this repo.
-6. Make the code differentiable.
+4. After (3), implement a parabolic term with Additive methods.
 
 ## Notes
 
